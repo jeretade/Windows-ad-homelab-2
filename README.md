@@ -234,7 +234,6 @@ gpresult /r
 Output confirmed `Test-Wallpaper-Policy` under **Applied Group Policy Objects**, sourced from `DC01.lab.local`. After a full logoff/logon cycle, the desktop wallpaper updated automatically — confirming successful end-to-end GPO deployment from the DC to the client.
 
 ![gpresult /r output showing the GPO applied](Screenshots/SuccessfulGPupdate.png)
-)
 ![Windows 8.1 desktop with the new wallpaper applied](Screenshots/WallpaperPolicyApplied.png)
 
 ---
