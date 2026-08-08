@@ -1,4 +1,4 @@
-# Windows AD Home Lab — Build Report
+<img width="1920" height="1080" alt="successfulGPupdate" src="https://github.com/user-attachments/assets/788093d6-6916-461c-91a6-09dd4287c766" /># Windows AD Home Lab — Build Report
 
 A home lab built on **Parrot OS** using **VirtualBox**, consisting of a **Windows Server (Core)** promoted to an **Active Directory Domain Controller**, and a **Windows 8** client joined to that domain. Built for hands-on practice with Active Directory administration and general sysadmin skills in an isolated environment.
 
@@ -200,13 +200,13 @@ During installation, hit a UAC elevation issue while logged in as the standard d
 Add-ADGroupMember -Identity "Domain Admins" -Members testuser
 ```
 
-![RSAT installation progress/completion](screenshots/15-rsat-install.jpg)
+![RSAT installation progress/completion](Screenshots/RSATinstalling.png)
 
 ### 8.2 Verify RSAT works
 
 Opened **Active Directory Users and Computers** (`dsa.msc`) from Windows 8.1 and successfully performed a password reset on `testuser` through the GUI, confirming RSAT was correctly talking to `DC01`.
 
-![Active Directory Users and Computers — password reset via GUI](screenshots/16-aduc-password-reset.jpg)
+![Active Directory Users and Computers — password reset via GUI](screenshots/passwordReset.png)
 
 ---
 
@@ -222,7 +222,7 @@ Configured it under `User Configuration → Policies → Administrative Template
 dir C:\Windows\Web\Wallpaper /s /b
 ```
 
-![Group Policy Editor — Desktop Wallpaper setting configured](screenshots/17-gpo-wallpaper-editor.jpg)
+![Group Policy Editor — Desktop Wallpaper setting configured](screenshots/wallpaper.png)
 
 ### 9.2 Apply and verify
 
@@ -233,8 +233,9 @@ gpresult /r
 
 Output confirmed `Test-Wallpaper-Policy` under **Applied Group Policy Objects**, sourced from `DC01.lab.local`. After a full logoff/logon cycle, the desktop wallpaper updated automatically — confirming successful end-to-end GPO deployment from the DC to the client.
 
-![gpresult /r output showing the GPO applied](screenshots/18-gpresult-applied.jpg)
-![Windows 8.1 desktop with the new wallpaper applied](screenshots/19-wallpaper-applied.jpg)
+![gpresult /r output showing the GPO applied](screenshots/successfulGPupdate.png)
+)
+![Windows 8.1 desktop with the new wallpaper applied](screenshots/WallpaperPolicyApplied.png)
 
 ---
 
@@ -255,7 +256,7 @@ sudo nmap -sn 192.168.56.0/24
 | 192.168.56.20 | `OPKI` (Windows 8.1) | Domain-joined client |
 | 192.168.56.100 | Unidentified, no open ports | Investigated — host-only DHCP confirmed **Disabled**; host responds to ping but exposes no services. Not a security concern, likely a reserved/phantom address on the virtual network. |
 
-![nmap -sn host discovery results](screenshots/20-nmap-discovery.jpg)
+![nmap -sn host discovery results](screenshots/hostDiscovery.png)
 
 ### 10.2 Full port + service scan — Domain Controller
 
@@ -278,7 +279,7 @@ A textbook AD service footprint — confirmed the DC's role purely from exposed 
 | 3389 | RDP | Remote administration (enabled earlier in this lab) |
 | 5985 | WinRM | PowerShell remoting |
 
-![nmap full scan results against DC01](screenshots/21-nmap-dc-fullscan.jpg)
+![nmap full scan results against DC01](screenshots/ReconOnServer.png)
 
 ### 10.3 Full port + service scan — Windows 8.1 client
 
@@ -288,7 +289,7 @@ sudo nmap -sV -p- 192.168.56.20
 
 A dramatically smaller footprint than the DC — only **3 open ports** (135/RPC, 445/SMB, one dynamic RPC port). Confirms the expected principle that domain clients expose minimal services and lean on the DC for authentication, directory, and policy — which is exactly why servers are the higher-value target in a real environment.
 
-![nmap full scan results against Windows 8.1](screenshots/22-nmap-win8-fullscan.jpg)
+![nmap full scan results against Windows 8.1](screenshots/ReconOnWindows.png)
 
 ---
 
@@ -309,23 +310,6 @@ A dramatically smaller footprint than the DC — only **3 open ports** (135/RPC,
 
 ---
 
-## Where to Add Screenshots
-
-All screenshots go in the `screenshots/` folder at the repo root, named to match the references above:
-
-| Filename | Description |
-|---|---|
-| `14-domain-login-testuser.jpg` | Windows 8.1 successful domain logon |
-| `15-rsat-install.jpg` | RSAT installation progress/completion |
-| `16-aduc-password-reset.jpg` | AD Users and Computers GUI password reset |
-| `17-gpo-wallpaper-editor.jpg` | Group Policy Editor, Desktop Wallpaper setting |
-| `18-gpresult-applied.jpg` | `gpresult /r` showing the GPO applied |
-| `19-wallpaper-applied.jpg` | Windows 8.1 desktop with new wallpaper |
-| `20-nmap-discovery.jpg` | `nmap -sn` host discovery results |
-| `21-nmap-dc-fullscan.jpg` | `nmap -sV -p-` results against the DC |
-| `22-nmap-win8-fullscan.jpg` | `nmap -sV -p-` results against Windows 8.1 |
-
-Just drop the images into `screenshots/` with these exact filenames and they'll render automatically in this README on GitHub — no other changes needed.
 
 ---
 
