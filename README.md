@@ -184,7 +184,7 @@ See sections 7–12 below for the full write-up of each item.
 
 Logged into the Windows 8.1 client using the domain account `LAB\testuser`, confirming the full authentication chain — DNS resolution, Kerberos ticket issuance, and domain trust — was working end-to-end.
 
-![Windows 8.1 successful domain logon as testuser](TestUser.png)
+![Windows 8.1 successful domain logon as testuser](Screenshots/TestUser.png)
 
 ---
 
