@@ -206,7 +206,7 @@ Add-ADGroupMember -Identity "Domain Admins" -Members testuser
 
 Opened **Active Directory Users and Computers** (`dsa.msc`) from Windows 8.1 and successfully performed a password reset on `testuser` through the GUI, confirming RSAT was correctly talking to `DC01`.
 
-![Active Directory Users and Computers — password reset via GUI](screenshots/passwordReset.png)
+![Active Directory Users and Computers — password reset via GUI](Screenshots/passwordReset.png)
 
 ---
 
@@ -222,7 +222,7 @@ Configured it under `User Configuration → Policies → Administrative Template
 dir C:\Windows\Web\Wallpaper /s /b
 ```
 
-![Group Policy Editor — Desktop Wallpaper setting configured](screenshots/wallpaper.png)
+![Group Policy Editor — Desktop Wallpaper setting configured](Screenshots/wallpaper.png)
 
 ### 9.2 Apply and verify
 
@@ -233,9 +233,9 @@ gpresult /r
 
 Output confirmed `Test-Wallpaper-Policy` under **Applied Group Policy Objects**, sourced from `DC01.lab.local`. After a full logoff/logon cycle, the desktop wallpaper updated automatically — confirming successful end-to-end GPO deployment from the DC to the client.
 
-![gpresult /r output showing the GPO applied](screenshots/successfulGPupdate.png)
+![gpresult /r output showing the GPO applied](Screenshots/SuccessfulGPupdate.png)
 )
-![Windows 8.1 desktop with the new wallpaper applied](screenshots/WallpaperPolicyApplied.png)
+![Windows 8.1 desktop with the new wallpaper applied](Screenshots/WallpaperPolicyApplied.png)
 
 ---
 
@@ -256,7 +256,7 @@ sudo nmap -sn 192.168.56.0/24
 | 192.168.56.20 | `OPKI` (Windows 8.1) | Domain-joined client |
 | 192.168.56.100 | Unidentified, no open ports | Investigated — host-only DHCP confirmed **Disabled**; host responds to ping but exposes no services. Not a security concern, likely a reserved/phantom address on the virtual network. |
 
-![nmap -sn host discovery results](screenshots/hostDiscovery.png)
+![nmap -sn host discovery results](Screenshots/hostDiscovery.png)
 
 ### 10.2 Full port + service scan — Domain Controller
 
@@ -279,7 +279,7 @@ A textbook AD service footprint — confirmed the DC's role purely from exposed 
 | 3389 | RDP | Remote administration (enabled earlier in this lab) |
 | 5985 | WinRM | PowerShell remoting |
 
-![nmap full scan results against DC01](screenshots/ReconOnServer.png)
+![nmap full scan results against DC01](Screenshots/ReconOnServer.png)
 
 ### 10.3 Full port + service scan — Windows 8.1 client
 
@@ -289,7 +289,7 @@ sudo nmap -sV -p- 192.168.56.20
 
 A dramatically smaller footprint than the DC — only **3 open ports** (135/RPC, 445/SMB, one dynamic RPC port). Confirms the expected principle that domain clients expose minimal services and lean on the DC for authentication, directory, and policy — which is exactly why servers are the higher-value target in a real environment.
 
-![nmap full scan results against Windows 8.1](screenshots/ReconOnWindows.png)
+![nmap full scan results against Windows 8.1](Screenshots/ReconOnWindows.png)
 
 ---
 
